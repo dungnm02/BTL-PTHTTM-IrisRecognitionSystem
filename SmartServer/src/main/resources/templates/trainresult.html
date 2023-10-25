@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kết quả huấn luyện</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<header>
+    <nav id="navbar">
+        <div class="container">
+            <ul>
+                <li><a class="current" href="/managemodel">Quản lý mô hình</a></li>
+                <li><a href="#">Quản lý mẫu</a></li>
+                <li><a href="#">Quản lý nhãn</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div class="form-container">
+    <div class="form-wrap">
+        <h2>Kết quả huấn luyện</h2>
+        <form method="post" th:action="@{/managemodel/train/{algoType}/save(algoType=${mlModel.algoType})}"
+              th:object="${mlModel}">
+            <input th:field="${mlModel.trainDataset}" type="hidden">
+            <div class="form-group">
+                <label for="modelName">Tên mô hình</label>
+                <input id="modelName" th:field="${mlModel.modelName}" type="text">
+            </div>
+            <div class="form-group">
+                <label for="algoType">Loại mô hình</label>
+                <input id="algoType" readonly th:field="${mlModel.algoType}">
+            </div>
+            <div class="form-group">
+                <label for="createDate">Ngày tạo</label>
+                <input id="createDate" readonly th:field="${mlModel.createDate}">
+            </div>
+            <div class="form-group">
+                <label for="trainDataset">Bộ dữ liệu sử dụng</label>
+                <input id="trainDataset" readonly th:field="${mlModel.trainDataset.datasetName}">
+            </div>
+            <div class="form-group">
+                <label for="modelPath">Đường dẫn</label>
+                <input id="modelPath" readonly th:field="${mlModel.modelPath}">
+            </div>
+            <div class="form-group">
+                <label for="acc">Accuracy</label>
+                <input id="acc" readonly th:field="${mlModel.acc}">
+            </div>
+            <div class="form-group">
+                <label for="pre">Precision</label>
+                <input id="pre" readonly th:field="${mlModel.pre}">
+            </div>
+            <div class="form-group">
+                <label for="rec">Recall</label>
+                <input id="rec" readonly th:field="${mlModel.rec}">
+            </div>
+            <div class="form-group">
+                <label for="f1">F1</label>
+                <input id="f1" readonly th:field="${mlModel.f1}">
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

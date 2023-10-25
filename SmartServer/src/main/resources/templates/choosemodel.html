@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chọn mô hình</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body onload="modelTablePopulate()">
+<header>
+    <nav id="navbar">
+        <div class="container">
+            <ul>
+                <li><a class="current" href="/managemodel">Quản lý mô hình</a></li>
+                <li><a href="#">Quản lý mẫu</a></li>
+                <li><a href="#">Quản lý nhãn</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<form method="post" th:action="@{/managemodel/choose/{algoType}(algoType=${algoType})}">
+    <h3 class="table-title">Các mô hình</h3>
+    <table>
+        <thead>
+        <th>STT</th>
+        <th>Tên</th>
+        <th>Bộ dữ liệu</th>
+        <th>Ngày tạo</th>
+        <th>F1</th>
+        <th>Sử dụng</th>
+        </thead>
+        <tbody id="mlModelsTableBody">
+        </tbody>
+    </table>
+    <button class="table-submit-button" type="submit">Xác nhận</button>
+</form>
+</body>
+</html>
+
+<script th:inline="javascript">
+    function modelTablePopulate() {
+        const mlModels = /*[[${mlModels}]]*/ [];
+        const tableBody = document.querySelector("#mlModelsTableBody");
+        tableBody.innerHTML = "";
+
+        mlModels.forEach(function (mlModel, index) {
+            var row = document.createElement("tr");
+
+            var sttCell = document.createElement("td");
+            sttCell.textContent = index + 1;
+            row.appendChild(sttCell);
+
+            var nameCell = document.createElement("td");
+            nameCell.textContent = mlModel.modelName;
+            row.appendChild(nameCell);
+
+            var datasetCell = document.createElement("td");
+            datasetCell.textContent = mlModel.trainDataset.datasetName;
+            row.appendChild(datasetCell);
+
+            var createDateCell = document.createElement("td");
+            createDateCell.textContent = mlModel.createDate;
+            row.appendChild(createDateCell);
+
+            var f1Cell = document.createElement("td");
+            f1Cell.textContent = mlModel.f1;
+            row.appendChild(f1Cell);
+
+            var checkboxCell = document.createElement("td");
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name = "selectedModelId";
+            checkbox.value = mlModel.id;
+            if (mlModel.active) {
+                checkbox.checked = true
+            }
+            checkbox.onclick = function () {
+                if (this.checked) {
+                    checkboxes = document.getElementsByName("selectedModelId");
+                    checkboxes.forEach(function (otherCheckbox) {
+                        if (otherCheckbox !== checkbox) {
+                            otherCheckbox.checked = false;
+                        }
+                    });
+                }
+            };
+            checkboxCell.appendChild(checkbox);
+            row.appendChild(checkboxCell);
+            tableBody.appendChild(row);
+        });
+    }
+</script>

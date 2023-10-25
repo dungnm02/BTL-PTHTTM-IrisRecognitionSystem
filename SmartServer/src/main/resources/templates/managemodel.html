@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý mô hình</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+
+</head>
+<body>
+<header>
+    <nav id="navbar">
+        <div class="container">
+            <ul>
+                <li><a class="current" href="/managemodel">Quản lý mô hình</a></li>
+                <li><a href="#">Quản lý mẫu</a></li>
+                <li><a href="#">Quản lý nhãn</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div class="form-container">
+    <div class="form-wrap">
+        <h2>Quản lý mô hình</h2>
+        <div class="select-container">
+            <label for="algoType">Chọn loại mô hình
+                <select id="algoType">
+                    <option value="seg">Mô hình phân vùng</option>
+                    <option value="clas">Mô hình phân loại</option>
+                </select>
+            </label>
+        </div>
+        <div class="from-group">
+            <button id="trainButton">Huấn luyện mô hình</button>
+            <button id="chooseButton">Chọn mô hình</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.getElementById("trainButton").addEventListener("click", function () {
+        const selectedAlgoType = document.getElementById("algoType").value;
+        console.log("selectedAlgoType: " + selectedAlgoType);
+        window.location.href = "managemodel/train/" + selectedAlgoType;
+    });
+
+    document.getElementById("chooseButton").addEventListener("click", function () {
+        const selectedAlgoType = document.getElementById("algoType").value;
+        console.log("selectedAlgoType: " + selectedAlgoType);
+        window.location.href = "managemodel/choose/" + selectedAlgoType;
+    });
+</script>
+
+</body>
+</html>
